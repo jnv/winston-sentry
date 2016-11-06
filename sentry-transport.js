@@ -98,15 +98,15 @@ Sentry.prototype._captureError = function (err, msg, meta, callback) {
   });
 };
 
-Sentry.prototype.log = function (level, msg, meta, callback) {
+Sentry.prototype.log = function (winstonLevel, msg, meta, callback) {
   if (this.silent) {
     return callback(null, true);
   }
 
-  var extra = this._extra(level, meta);
+  var extra = this._extra(winstonLevel, meta);
 
   try {
-    if (extra.level == "error") {
+    if (winstonLevel == this.exceptionsLevel) {
       this._captureError(meta, msg, extra, callback);
     } else {
       this._sentry.captureMessage(msg, extra, function() {
@@ -116,12 +116,6 @@ Sentry.prototype.log = function (level, msg, meta, callback) {
   } catch(err) {
     console.error(err);
   }
-};
-
-Sentry.prototype.logException = function (msg, meta, callback, err) {
-  var extra = this._extra(this.exceptionsLevel, meta);
-
-  this._captureError(err, msg, extra, callback);
 };
 
 module.exports = Sentry;
