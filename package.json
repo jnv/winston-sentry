@@ -1,5 +1,5 @@
 {
-  "name": "winston-sentry",
+  "name": "@jnv/winston-sentry",
   "version": "0.1.5",
   "description": "Sentry transport for the winston logger.",
   "main": "sentry-transport.js",
